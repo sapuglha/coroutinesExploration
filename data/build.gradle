@@ -1,18 +1,19 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
+
     defaultConfig {
-        applicationId "com.sapuglha.coroutinesexploration"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -28,20 +29,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':data')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.71"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.30.2"
+    // ========== Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.71"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.30.2"
 
-    implementation 'com.google.android.material:material:1.0.0'
-
-    def lifecycle_version = "2.0.0"
-    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
-    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
-
+    // ========== Dagger
     def dagger_version = "2.16"
     implementation "com.google.dagger:dagger:$dagger_version"
     implementation "com.google.dagger:dagger-android:$dagger_version"
@@ -49,8 +42,21 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    // ========== Room
+    def room_version = "2.1.0-alpha01"
+    api "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
+    // ========== Retrofit
+    def okhttp_version = "3.11.0"
+    def retrofit_version = "2.4.0"
+
+    api "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+
+    // ========== Tests
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-beta02'
