@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.sapuglha.coroutinesexploration.data.type.UserEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/item_user_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.username}"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="bobson" />
+
+        <TextView
+            android:id="@+id/item_user_fullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.fullname}"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Bob Bobson" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

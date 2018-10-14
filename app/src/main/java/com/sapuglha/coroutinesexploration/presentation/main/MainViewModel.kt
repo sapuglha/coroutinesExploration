@@ -1,5 +1,6 @@
 package com.sapuglha.coroutinesexploration.presentation.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.sapuglha.coroutinesexploration.data.db.AppDatabase
 import com.sapuglha.coroutinesexploration.data.type.UserEntity
@@ -9,10 +10,12 @@ class MainViewModel @Inject constructor(
     val db: AppDatabase
 ) : ViewModel() {
 
+    val users: LiveData<List<UserEntity>> =
+        db.userDao().observeAll()
+
     fun updateUser() {
         db.userDao().insert(
             UserEntity(
-                id = 1,
                 username = "bobson",
                 firstName = "Bob",
                 lastName = "Bobson"
