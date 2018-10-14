@@ -1,4 +1,4 @@
-package com.sapuglha.coroutinesexploration.presentation.main
+package com.sapuglha.coroutinesexploration.presentation.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,7 @@ import com.sapuglha.coroutinesexploration.data.db.AppDatabase
 import com.sapuglha.coroutinesexploration.data.type.UserEntity
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class ListViewModel @Inject constructor(
     val db: AppDatabase
 ) : ViewModel() {
 

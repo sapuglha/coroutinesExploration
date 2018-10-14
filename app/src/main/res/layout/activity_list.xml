@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="com.sapuglha.coroutinesexploration.presentation.main.MainViewModel" />
+            type="com.sapuglha.coroutinesexploration.presentation.list.ListViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.main.MainActivity">
+        tools:context=".presentation.list.ListActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_users"
@@ -38,9 +38,7 @@
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_add"
-            tools:layout_editor_absoluteX="325dp"
-            tools:layout_editor_absoluteY="452dp" />
+            app:srcCompat="@drawable/ic_add" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

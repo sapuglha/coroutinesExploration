@@ -1,4 +1,4 @@
-package com.sapuglha.coroutinesexploration.presentation.main
+package com.sapuglha.coroutinesexploration.presentation.list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import com.sapuglha.coroutinesexploration.data.type.UserEntity
 import com.sapuglha.coroutinesexploration.databinding.ItemUserBinding
 
 
-class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
+class ListRowAdapter : RecyclerView.Adapter<ListRowAdapter.ViewHolder>() {
 
     private var items: List<UserEntity> = emptyList()
 
