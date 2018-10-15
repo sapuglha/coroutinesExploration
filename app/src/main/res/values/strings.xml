@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CoroutinesExploration</string>
+    <string name="activity_form_textview_username_placeholder">User name</string>
+    <string name="activity_form_textview_firstname_placeholder">First name</string>
+    <string name="activity_form_textview_lastname_placeholder">Last Name</string>
+    <string name="menu_form_action_save">Save</string>
 </resources>

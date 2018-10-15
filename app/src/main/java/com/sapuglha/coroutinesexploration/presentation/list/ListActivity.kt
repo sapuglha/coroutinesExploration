@@ -1,5 +1,6 @@
 package com.sapuglha.coroutinesexploration.presentation.list
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sapuglha.coroutinesexploration.R
 import com.sapuglha.coroutinesexploration.databinding.ActivityListBinding
 import com.sapuglha.coroutinesexploration.presentation.ViewModelFactory
+import com.sapuglha.coroutinesexploration.presentation.form.FormActivity
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -36,7 +38,7 @@ class ListActivity : AppCompatActivity() {
         binding.listUsers.adapter = ListRowAdapter()
 
         binding.floatingActionButton.setOnClickListener {
-            viewModel.updateUser()
+            startActivity(Intent(this, FormActivity::class.java))
         }
     }
 }
