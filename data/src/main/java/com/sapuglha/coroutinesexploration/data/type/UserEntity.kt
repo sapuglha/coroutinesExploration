@@ -14,4 +14,14 @@ data class UserEntity(
 
     val fullname: String
         get() = "$firstName $lastName"
+
+    companion object {
+        fun newInstance(count: Int): UserEntity =
+            UserEntity(
+                username = "username-$count",
+                firstName = "first-$count",
+                lastName = "last-$count"
+            )
+
+    }
 }

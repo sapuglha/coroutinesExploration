@@ -12,14 +12,4 @@ class ListViewModel @Inject constructor(
 
     val users: LiveData<List<UserEntity>> =
         db.userDao().observeAll()
-
-    fun updateUser() {
-        db.userDao().insert(
-            UserEntity(
-                username = "bobson",
-                firstName = "Bob",
-                lastName = "Bobson"
-            )
-        )
-    }
 }
