@@ -11,6 +11,7 @@ import com.sapuglha.coroutinesexploration.di.SessionComponent
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.support.HasSupportFragmentInjector
+import timber.log.Timber
 import javax.inject.Inject
 
 class App : Application(), HasActivityInjector, HasSupportFragmentInjector {
@@ -29,6 +30,10 @@ class App : Application(), HasActivityInjector, HasSupportFragmentInjector {
 
     override fun onCreate() {
         super.onCreate()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
 
         setupDependencyInjection()
     }
