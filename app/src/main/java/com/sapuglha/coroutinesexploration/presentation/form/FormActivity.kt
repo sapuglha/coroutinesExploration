@@ -12,6 +12,7 @@ import com.sapuglha.coroutinesexploration.R
 import com.sapuglha.coroutinesexploration.databinding.ActivityFormBinding
 import com.sapuglha.coroutinesexploration.presentation.ViewModelFactory
 import dagger.android.AndroidInjection
+import timber.log.Timber
 import javax.inject.Inject
 
 class FormActivity : AppCompatActivity() {
@@ -35,6 +36,7 @@ class FormActivity : AppCompatActivity() {
         viewModel.formSaved.observe(this, Observer { it ->
             it.getContentIfNotHandled()?.let {
                 Toast.makeText(this, "User added", Toast.LENGTH_LONG).show()
+                Timber.e("*** Toast showed ***")
                 finish()
             }
         })

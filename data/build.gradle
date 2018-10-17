@@ -32,7 +32,6 @@ dependencies {
 
     // ========== Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.71"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.30.2"
 
     // ========== Dagger
     def dagger_version = "2.16"

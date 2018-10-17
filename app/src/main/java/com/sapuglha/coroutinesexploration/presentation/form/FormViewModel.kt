@@ -12,7 +12,7 @@ import kotlinx.coroutines.experimental.Job
 import javax.inject.Inject
 
 class FormViewModel @Inject constructor(
-    val db: AppDatabase
+    private val db: AppDatabase
 ) : ViewModel() {
 
     private val _formSaved = MutableLiveData<Event<Boolean>>()
