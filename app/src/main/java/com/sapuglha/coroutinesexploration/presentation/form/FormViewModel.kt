@@ -6,9 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.sapuglha.coroutinesexploration.data.db.AppDatabase
 import com.sapuglha.coroutinesexploration.data.type.UserEntity
 import com.sapuglha.coroutinesexploration.presentation.Event
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class FormViewModel @Inject constructor(
@@ -23,14 +22,39 @@ class FormViewModel @Inject constructor(
     val firstnameField = MutableLiveData<String>()
     val lastnameField = MutableLiveData<String>()
 
+    private val viewModelJob = Job()
+    private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
+
     fun addUser() {
+        Timber.e("*** Save button pressed ***")
         val inputData = getInputData()
 
         if (isFormInvalid(inputData)) return
 
-        db.userDao().insert(inputData)
+        ioScope.launch {
+            count()
+            saveToDB(inputData)
+            _formSaved.postValue(Event(true))
+        }
+    }
 
-        _formSaved.postValue(Event(true))
+    private suspend fun count() {
+        Timber.d(">=> Started counting <=<")
+        var iteration = 0
+        do {
+            Timber.d(">=> Current iteration: $iteration <=<")
+            delay(100)
+            iteration++
+        } while (iteration < 20)
+
+        Timber.d(">=> Done counting <=<")
+    }
+
+    private suspend fun saveToDB(inputData: UserEntity) {
+        Timber.w("=== Will save to DB ===")
+        delay(5_000)
+        db.userDao().insert(inputData)
+        Timber.w("=== Done saving to DB ===")
     }
 
     private fun getInputData(): UserEntity {
@@ -45,5 +69,10 @@ class FormViewModel @Inject constructor(
         return (input.username.isBlank()
                 || input.firstName.isBlank()
                 || input.lastName.isBlank())
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }
