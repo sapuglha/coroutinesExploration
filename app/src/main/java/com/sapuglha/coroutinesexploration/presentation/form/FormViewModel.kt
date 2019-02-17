@@ -3,10 +3,15 @@ package com.sapuglha.coroutinesexploration.presentation.form
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sapuglha.coroutinesexploration.data.db.AppDatabase
 import com.sapuglha.coroutinesexploration.data.type.UserEntity
 import com.sapuglha.coroutinesexploration.presentation.Event
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -22,18 +27,23 @@ class FormViewModel @Inject constructor(
     val firstnameField = MutableLiveData<String>()
     val lastnameField = MutableLiveData<String>()
 
-    private val viewModelJob = Job()
-    private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
-
     fun addUser() {
         Timber.e("*** Save button pressed ***")
         val inputData = getInputData()
 
         if (isFormInvalid(inputData)) return
 
-        ioScope.launch {
-            count()
-            saveToDB(inputData)
+        viewModelScope.launch {
+            val deferred1 = async { count() }
+
+            val deferred2 = async {
+                withContext(IO) {
+                    saveToDB(inputData)
+                }
+            }
+            deferred1.await()
+            deferred2.await()
+
             _formSaved.postValue(Event(true))
         }
     }
@@ -43,7 +53,7 @@ class FormViewModel @Inject constructor(
         var iteration = 0
         do {
             Timber.d(">=> Current iteration: $iteration <=<")
-            delay(100)
+            delay(1000)
             iteration++
         } while (iteration < 20)
 
@@ -69,10 +79,5 @@ class FormViewModel @Inject constructor(
         return (input.username.isBlank()
                 || input.firstName.isBlank()
                 || input.lastName.isBlank())
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

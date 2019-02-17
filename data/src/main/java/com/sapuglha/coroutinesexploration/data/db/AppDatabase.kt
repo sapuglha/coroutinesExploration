@@ -31,7 +31,6 @@ abstract class AppDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) = Room
             .inMemoryDatabaseBuilder(context.applicationContext, AppDatabase::class.java)
-            .allowMainThreadQueries()
             .build()
     }
 }
