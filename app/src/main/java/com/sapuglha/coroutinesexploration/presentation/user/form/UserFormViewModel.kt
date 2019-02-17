@@ -1,4 +1,4 @@
-package com.sapuglha.coroutinesexploration.presentation.form
+package com.sapuglha.coroutinesexploration.presentation.user.form
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
-class FormViewModel @Inject constructor(
+class UserFormViewModel @Inject constructor(
     private val db: AppDatabase
 ) : ViewModel() {
 

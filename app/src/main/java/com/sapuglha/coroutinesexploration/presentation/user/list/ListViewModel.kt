@@ -1,4 +1,4 @@
-package com.sapuglha.coroutinesexploration.presentation.list
+package com.sapuglha.coroutinesexploration.presentation.user.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

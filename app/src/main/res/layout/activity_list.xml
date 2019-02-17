@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="com.sapuglha.coroutinesexploration.presentation.list.ListViewModel" />
+            type="com.sapuglha.coroutinesexploration.presentation.user.list.ListViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.list.ListActivity">
+        tools:context=".presentation.user.list.ListActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_users"

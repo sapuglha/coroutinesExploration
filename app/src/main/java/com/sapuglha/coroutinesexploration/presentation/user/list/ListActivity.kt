@@ -1,4 +1,4 @@
-package com.sapuglha.coroutinesexploration.presentation.list
+package com.sapuglha.coroutinesexploration.presentation.user.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sapuglha.coroutinesexploration.R
 import com.sapuglha.coroutinesexploration.databinding.ActivityListBinding
 import com.sapuglha.coroutinesexploration.presentation.ViewModelFactory
-import com.sapuglha.coroutinesexploration.presentation.form.FormActivity
+import com.sapuglha.coroutinesexploration.presentation.user.form.UserFormFragment
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -35,7 +35,7 @@ class ListActivity : AppCompatActivity() {
         binding.listUsers.adapter = ListRowAdapter()
 
         binding.floatingActionButton.setOnClickListener {
-            startActivity(Intent(this, FormActivity::class.java))
+            startActivity(Intent(this, UserFormFragment::class.java))
         }
     }
 }

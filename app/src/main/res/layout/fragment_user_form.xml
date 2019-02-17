@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.form.FormActivity">
+    tools:context=".presentation.user.form.UserFormFragment">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.sapuglha.coroutinesexploration.presentation.form.FormViewModel" />
+            type="com.sapuglha.coroutinesexploration.presentation.user.form.UserFormViewModel" />
 
     </data>
 
