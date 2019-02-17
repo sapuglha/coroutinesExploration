@@ -6,7 +6,7 @@ import com.sapuglha.coroutinesexploration.data.db.AppDatabase
 import com.sapuglha.coroutinesexploration.data.type.UserEntity
 import javax.inject.Inject
 
-class ListViewModel @Inject constructor(
+class UserListViewModel @Inject constructor(
     val db: AppDatabase
 ) : ViewModel() {
 
