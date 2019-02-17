@@ -2,9 +2,9 @@ package com.sapuglha.coroutinesexploration.presentation.list
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sapuglha.coroutinesexploration.R
 import com.sapuglha.coroutinesexploration.databinding.ActivityListBinding
@@ -13,16 +13,13 @@ import com.sapuglha.coroutinesexploration.presentation.form.FormActivity
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
-
 class ListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityListBinding
 
     @Inject
-    lateinit var factory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelFactory
 
-    private val viewModel: ListViewModel by lazy {
-        ViewModelProviders.of(this, factory).get(ListViewModel::class.java)
-    }
+    private val viewModel: ListViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)

@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.sapuglha.coroutinesexploration.R
 import com.sapuglha.coroutinesexploration.databinding.ActivityFormBinding
 import com.sapuglha.coroutinesexploration.presentation.ViewModelFactory
@@ -19,11 +19,9 @@ class FormActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFormBinding
 
     @Inject
-    lateinit var factory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelFactory
 
-    private val viewModel: FormViewModel by lazy {
-        ViewModelProviders.of(this, factory).get(FormViewModel::class.java)
-    }
+    private val viewModel: FormViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
