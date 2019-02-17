@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/userListFragment"
         android:name="com.sapuglha.coroutinesexploration.presentation.user.list.UserListFragment"
-        android:label="UserListFragment"
+        android:label="Users"
         tools:layout="@layout/fragment_user_list">
         <action
             android:id="@+id/action_userListFragment_to_userFormFragment"
@@ -18,7 +18,6 @@
     <fragment
         android:id="@+id/userFormFragment"
         android:name="com.sapuglha.coroutinesexploration.presentation.user.form.UserFormFragment"
-        android:label="fragment_user_form"
         tools:layout="@layout/fragment_user_form">
         <argument
             android:name="userId"

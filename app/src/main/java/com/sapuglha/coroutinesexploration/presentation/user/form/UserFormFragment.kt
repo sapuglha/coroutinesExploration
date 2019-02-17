@@ -3,6 +3,7 @@ package com.sapuglha.coroutinesexploration.presentation.user.form
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -34,6 +35,11 @@ class UserFormFragment : Fragment() {
 
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            title = if (arguments.userId.isNullOrBlank())
+                "New User" else "User Details"
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
