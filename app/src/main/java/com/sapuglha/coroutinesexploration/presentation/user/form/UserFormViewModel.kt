@@ -19,6 +19,8 @@ class UserFormViewModel @Inject constructor(
     private val db: AppDatabase
 ) : ViewModel() {
 
+    private val userId = MutableLiveData<String>()
+
     private val _formSaved = MutableLiveData<Event<Boolean>>()
     val formSaved: LiveData<Event<Boolean>>
         get() = _formSaved
@@ -79,5 +81,9 @@ class UserFormViewModel @Inject constructor(
         return (input.username.isBlank()
                 || input.firstName.isBlank()
                 || input.lastName.isBlank())
+    }
+
+    fun setUserId(id: String?) {
+        userId.value = id
     }
 }

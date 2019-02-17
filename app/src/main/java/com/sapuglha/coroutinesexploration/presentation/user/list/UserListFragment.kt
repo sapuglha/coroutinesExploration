@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sapuglha.coroutinesexploration.R
 import com.sapuglha.coroutinesexploration.databinding.FragmentUserListBinding
@@ -41,8 +42,10 @@ class UserListFragment : Fragment() {
         binding.listUsers.adapter = ListRowAdapter()
 
         binding.floatingActionButton.setOnClickListener {
-            // TODO: convert to navargs
-//            startActivity(Intent(this, UserFormFragment::class.java))
+            // This is a new user, we want to navigate to a "null user ID"
+            findNavController().navigate(
+                UserListFragmentDirections.actionUserListFragmentToUserFormFragment(null)
+            )
         }
     }
 }

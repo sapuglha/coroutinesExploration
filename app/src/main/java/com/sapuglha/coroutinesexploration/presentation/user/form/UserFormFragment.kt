@@ -7,9 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sapuglha.coroutinesexploration.R
 import com.sapuglha.coroutinesexploration.databinding.FragmentUserFormBinding
 import com.sapuglha.coroutinesexploration.presentation.ViewModelFactory
+import com.sapuglha.coroutinesexploration.presentation.extensions.hideKeyboard
 import dagger.android.support.AndroidSupportInjection
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,9 +25,15 @@ class UserFormFragment : Fragment() {
 
     private val viewModelUser: UserFormViewModel by viewModels { viewModelFactory }
 
+    private val arguments: UserFormFragmentArgs by navArgs()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidSupportInjection.inject(this)
+
+        viewModelUser.setUserId(arguments.userId)
+
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -32,11 +41,12 @@ class UserFormFragment : Fragment() {
         binding.viewModel = viewModelUser
         binding.lifecycleOwner = this
 
-        viewModelUser.formSaved.observe(this, Observer { it ->
+        viewModelUser.formSaved.observe(this, Observer {
             it.getContentIfNotHandled()?.let {
                 Toast.makeText(requireContext(), "User added", Toast.LENGTH_LONG).show()
                 Timber.e("*** Toast showed ***")
-                // TODO : close fragment
+
+                findNavController().navigateUp()
             }
         })
 
@@ -45,15 +55,18 @@ class UserFormFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_form, menu)
-        return super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 
-        return if (id == R.id.action_save) {
-            viewModelUser.addUser()
-            true
-        } else super.onOptionsItemSelected(item)
+        return when (id) {
+            R.id.action_save -> {
+                hideKeyboard()
+                viewModelUser.addUser()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

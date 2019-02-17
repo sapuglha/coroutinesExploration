@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -72,7 +73,7 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:$versions.timber"
 
-    // ========== Testss
+    // ========== Tests
     testImplementation "junit:junit:$versions.junit"
     androidTestImplementation "androidx.test:runner:$versions.androidx.test_runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.androidx.test_espresso"
