@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.sapuglha.coroutinesexploration.data.type.UserDao
-import com.sapuglha.coroutinesexploration.data.type.UserEntity
-
+import com.sapuglha.coroutinesexploration.data.db.type.UserDao
+import com.sapuglha.coroutinesexploration.data.db.type.UserEntity
 
 @Database(
     version = 1,

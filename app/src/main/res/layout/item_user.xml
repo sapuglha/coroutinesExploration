@@ -7,7 +7,7 @@
 
         <variable
             name="user"
-            type="com.sapuglha.coroutinesexploration.data.type.UserEntity" />
+            type="com.sapuglha.coroutinesexploration.domain.type.User" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

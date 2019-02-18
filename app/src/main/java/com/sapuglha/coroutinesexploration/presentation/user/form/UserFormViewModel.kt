@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sapuglha.coroutinesexploration.data.db.AppDatabase
-import com.sapuglha.coroutinesexploration.data.type.UserEntity
+import com.sapuglha.coroutinesexploration.domain.type.User
+import com.sapuglha.coroutinesexploration.domain.usecase.SaveUserUseCase
 import com.sapuglha.coroutinesexploration.presentation.Event
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class UserFormViewModel @Inject constructor(
-    private val db: AppDatabase
+    private val saveUserUseCase: SaveUserUseCase
 ) : ViewModel() {
 
     private val userId = MutableLiveData<String>()
@@ -38,22 +38,22 @@ class UserFormViewModel @Inject constructor(
 
         viewModelScope.launch {
             withContext(IO) {
-                db.userDao().insert(inputData)
+                saveUserUseCase.execute(inputData)
             }
 
             _formSaved.postValue(Event(true))
         }
     }
 
-    private fun getInputData(): UserEntity {
-        return UserEntity(
+    private fun getInputData(): User {
+        return User(
             username = usernameField.value ?: "",
-            firstName = firstnameField.value ?: "",
-            lastName = lastnameField.value ?: ""
+            firstname = firstnameField.value ?: "",
+            lastname = lastnameField.value ?: ""
         )
     }
 
-    private fun isFormInvalid(input: UserEntity): Boolean {
+    private fun isFormInvalid(input: User): Boolean {
         var response = false
 
         usernameFieldError.value = ""
@@ -65,12 +65,12 @@ class UserFormViewModel @Inject constructor(
             response = response || true
         }
 
-        if (input.firstName.isBlank()) {
+        if (input.firstname.isBlank()) {
             firstnameFieldError.postValue("Required field")
             response = response || true
         }
 
-        if (input.lastName.isBlank()) {
+        if (input.lastname.isBlank()) {
             lastnameFieldError.postValue("Required field")
             response = response || true
         }
