@@ -1,4 +1,4 @@
-package com.sapuglha.coroutinesexploration.presentation.list
+package com.sapuglha.coroutinesexploration.presentation.user.list
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/userListFragment">
+
+    <fragment
+        android:id="@+id/userListFragment"
+        android:name="com.sapuglha.coroutinesexploration.presentation.user.list.UserListFragment"
+        android:label="Users"
+        tools:layout="@layout/fragment_user_list">
+        <action
+            android:id="@+id/action_userListFragment_to_userFormFragment"
+            app:destination="@id/userFormFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userFormFragment"
+        android:name="com.sapuglha.coroutinesexploration.presentation.user.form.UserFormFragment"
+        tools:layout="@layout/fragment_user_form">
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+</navigation>

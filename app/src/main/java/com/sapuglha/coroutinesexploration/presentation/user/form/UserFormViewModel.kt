@@ -1,4 +1,4 @@
-package com.sapuglha.coroutinesexploration.presentation.form
+package com.sapuglha.coroutinesexploration.presentation.user.form
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,24 +8,27 @@ import com.sapuglha.coroutinesexploration.data.db.AppDatabase
 import com.sapuglha.coroutinesexploration.data.type.UserEntity
 import com.sapuglha.coroutinesexploration.presentation.Event
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
-class FormViewModel @Inject constructor(
+class UserFormViewModel @Inject constructor(
     private val db: AppDatabase
 ) : ViewModel() {
+
+    private val userId = MutableLiveData<String>()
 
     private val _formSaved = MutableLiveData<Event<Boolean>>()
     val formSaved: LiveData<Event<Boolean>>
         get() = _formSaved
 
     val usernameField = MutableLiveData<String>()
+    val usernameFieldError = MutableLiveData<String>()
     val firstnameField = MutableLiveData<String>()
+    val firstnameFieldError = MutableLiveData<String>()
     val lastnameField = MutableLiveData<String>()
+    val lastnameFieldError = MutableLiveData<String>()
 
     fun addUser() {
         Timber.e("*** Save button pressed ***")
@@ -34,37 +37,12 @@ class FormViewModel @Inject constructor(
         if (isFormInvalid(inputData)) return
 
         viewModelScope.launch {
-            val deferred1 = async { count() }
-
-            val deferred2 = async {
-                withContext(IO) {
-                    saveToDB(inputData)
-                }
+            withContext(IO) {
+                db.userDao().insert(inputData)
             }
-            deferred1.await()
-            deferred2.await()
 
             _formSaved.postValue(Event(true))
         }
-    }
-
-    private suspend fun count() {
-        Timber.d(">=> Started counting <=<")
-        var iteration = 0
-        do {
-            Timber.d(">=> Current iteration: $iteration <=<")
-            delay(1000)
-            iteration++
-        } while (iteration < 20)
-
-        Timber.d(">=> Done counting <=<")
-    }
-
-    private suspend fun saveToDB(inputData: UserEntity) {
-        Timber.w("=== Will save to DB ===")
-        delay(5_000)
-        db.userDao().insert(inputData)
-        Timber.w("=== Done saving to DB ===")
     }
 
     private fun getInputData(): UserEntity {
@@ -76,8 +54,31 @@ class FormViewModel @Inject constructor(
     }
 
     private fun isFormInvalid(input: UserEntity): Boolean {
-        return (input.username.isBlank()
-                || input.firstName.isBlank()
-                || input.lastName.isBlank())
+        var response = false
+
+        usernameFieldError.value = ""
+        firstnameFieldError.value = ""
+        lastnameFieldError.value = ""
+
+        if (input.username.isBlank()) {
+            usernameFieldError.postValue("Required field")
+            response = response || true
+        }
+
+        if (input.firstName.isBlank()) {
+            firstnameFieldError.postValue("Required field")
+            response = response || true
+        }
+
+        if (input.lastName.isBlank()) {
+            lastnameFieldError.postValue("Required field")
+            response = response || true
+        }
+
+        return response
+    }
+
+    fun setUserId(id: String?) {
+        userId.value = id
     }
 }
