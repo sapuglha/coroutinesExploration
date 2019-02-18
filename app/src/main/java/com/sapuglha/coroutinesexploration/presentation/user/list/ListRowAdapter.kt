@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sapuglha.coroutinesexploration.R
-import com.sapuglha.coroutinesexploration.data.type.UserEntity
 import com.sapuglha.coroutinesexploration.databinding.ItemUserBinding
+import com.sapuglha.coroutinesexploration.domain.type.User
 
 
 class ListRowAdapter : RecyclerView.Adapter<ListRowAdapter.ViewHolder>() {
 
-    private var items: List<UserEntity> = emptyList()
+    private var items: List<User> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return LoadViewHolder(parent)
@@ -26,7 +26,7 @@ class ListRowAdapter : RecyclerView.Adapter<ListRowAdapter.ViewHolder>() {
         }
     }
 
-    fun update(items: List<UserEntity>) {
+    fun update(items: List<User>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -42,7 +42,7 @@ class ListRowAdapter : RecyclerView.Adapter<ListRowAdapter.ViewHolder>() {
             false
         )
     ) : ViewHolder(binding.root) {
-        fun bind(user: UserEntity) {
+        fun bind(user: User) {
             binding.user = user
         }
     }
