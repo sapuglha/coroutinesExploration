@@ -53,16 +53,16 @@ fun Application.main() {
         put("/user") {
             val input = call.receive<User>()
 
-            userList.add(
-                User(
-                    id = UUID.randomUUID().toString(),
-                    username = input.username,
-                    firstname = input.firstname,
-                    lastname = input.lastname
-                )
+            val newUser = User(
+                id = UUID.randomUUID().toString(),
+                username = input.username,
+                firstname = input.firstname,
+                lastname = input.lastname
             )
 
-            call.respond(HttpStatusCode.Created)
+            userList.add(newUser)
+
+            call.respond(HttpStatusCode.Created, newUser)
         }
 
         post("/user") {
@@ -74,7 +74,7 @@ fun Application.main() {
                 userList.remove(leUser)
                 userList.add(input)
 
-                call.respond(HttpStatusCode.OK)
+                call.respond(HttpStatusCode.OK, input)
 
             } ?: call.respond(HttpStatusCode.NotFound)
         }
