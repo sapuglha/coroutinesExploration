@@ -1,6 +1,7 @@
 package com.sapuglha.coroutinesexploration.data.di
 
 import com.sapuglha.coroutinesexploration.data.BuildConfig
+import com.sapuglha.coroutinesexploration.data.net.UserApi
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -35,4 +36,9 @@ open class NetModule {
             .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
             .baseUrl("http://10.0.2.2:8080")
             .build()
+
+    @Provides
+    fun provideUserApi(retrofit: Retrofit): UserApi =
+        retrofit.create(UserApi::class.java)
+
 }
