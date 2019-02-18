@@ -1,13 +1,21 @@
 package com.sapuglha.coroutinesexploration.presentation.user.list
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sapuglha.coroutinesexploration.domain.type.User
 import com.sapuglha.coroutinesexploration.domain.usecase.GetAllUsersUseCase
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UserListViewModel @Inject constructor(
-    getAllUsersUseCase: GetAllUsersUseCase
+    private val getAllUsersUseCase: GetAllUsersUseCase
 ) : ViewModel() {
-    val users: LiveData<List<User>> = getAllUsersUseCase.execute()
+    val users = MutableLiveData<List<User>>()
+
+    fun refreshUserList() {
+        viewModelScope.launch {
+            users.postValue(getAllUsersUseCase.execute())
+        }
+    }
 }

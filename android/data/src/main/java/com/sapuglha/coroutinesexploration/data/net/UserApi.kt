@@ -7,6 +7,9 @@ import retrofit2.http.PUT
 
 interface UserApi {
 
+    @GET("/users")
+    suspend fun getAllUsers(): List<User>
+
     @PUT("/user")
     suspend fun createUser(@Body user: User): User
 }
