@@ -48,4 +48,9 @@ class UserListFragment : Fragment() {
             )
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModelUser.refreshUserList()
+    }
 }
