@@ -1,32 +1,26 @@
 package com.sapuglha.coroutinesexploration
 
-import android.app.Activity
 import android.app.Application
 import androidx.annotation.VisibleForTesting
-import androidx.fragment.app.Fragment
 import com.sapuglha.coroutinesexploration.di.AppComponent
 import com.sapuglha.coroutinesexploration.di.AppModule
 import com.sapuglha.coroutinesexploration.di.DaggerAppComponent
 import com.sapuglha.coroutinesexploration.di.SessionComponent
+import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import timber.log.Timber
 import javax.inject.Inject
 
-class App : Application(), HasActivityInjector, HasSupportFragmentInjector {
+class App : Application(), HasAndroidInjector {
+
     @set:VisibleForTesting
     lateinit var component: AppComponent
 
     @Inject
-    internal lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
+    internal lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Any>
 
-    @Inject
-    internal lateinit var dispatchingFragmentInjector: DispatchingAndroidInjector<Fragment>
-
-    override fun activityInjector() = dispatchingActivityInjector
-
-    override fun supportFragmentInjector() = dispatchingFragmentInjector
+    override fun androidInjector(): AndroidInjector<Any> = dispatchingActivityInjector
 
     override fun onCreate() {
         super.onCreate()

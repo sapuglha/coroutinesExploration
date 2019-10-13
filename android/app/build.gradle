@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -13,10 +15,15 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
 
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        versionCode androidGitVersion.code()
+        versionName androidGitVersion.name()
 
         testInstrumentationRunner rootProject.ext.testInstrumentationRunner
+
+        resConfig "en"
+
+        // Force use of AndroidX VectorDrawableCompat
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -33,6 +40,29 @@ android {
     dataBinding {
         enabled = true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    // For Kotlin
+    // * Parcelize annotation
+    androidExtensions {
+        experimental = true
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.2'
+    }
 }
 
 dependencies {
@@ -48,22 +78,37 @@ dependencies {
 
     implementation "com.google.android.material:material:$versions.material_components"
 
+    implementation "androidx.activity:activity:$versions.androidx.activity"
+    implementation "androidx.activity:activity-ktx:$versions.androidx.activity"
+    implementation "androidx.core:core:$versions.androidx.core_ktx"
+    implementation "androidx.core:core-ktx:$versions.androidx.core_ktx"
+    implementation "androidx.fragment:fragment-ktx:$versions.androidx.fragment_ktx"
+
+    implementation "androidx.arch.core:core-common:$versions.androidx.arch"
+    implementation "androidx.arch.core:core-runtime:$versions.androidx.arch"
+    testImplementation "androidx.arch.core:core-testing:$versions.androidx.arch"
+    androidTestImplementation "androidx.arch.core:core-testing:$versions.androidx.arch"
+
+    implementation "androidx.savedstate:savedstate:$versions.androidx.savedState"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$versions.androidx.swipeRefreshLayout"
+    implementation "androidx.work:work-runtime-ktx:$versions.androidx.workmanager"
+
     // ========== Lifecycle
+    implementation "androidx.lifecycle:lifecycle-common-java8:$versions.androidx.lifecycle"
     implementation "androidx.lifecycle:lifecycle-runtime:$versions.androidx.lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidx.lifecycle"
     implementation "androidx.lifecycle:lifecycle-extensions:$versions.androidx.lifecycle"
-    kapt "androidx.lifecycle:lifecycle-compiler:$versions.androidx.lifecycle"
-
-    // ========== Androidx - various
-    implementation "androidx.core:core-ktx:$versions.androidx.core_ktx"
-    implementation "androidx.appcompat:appcompat:$versions.androidx.appcompat"
-    implementation "androidx.activity:activity-ktx:$versions.androidx.activity_ktx"
-    implementation "androidx.fragment:fragment-ktx:$versions.androidx.fragment_ktx"
-    implementation "androidx.constraintlayout:constraintlayout:$versions.androidx.constraintlayout"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.androidx.lifecycle"
 
     // ========== Navigation
+    implementation "androidx.navigation:navigation-common-ktx:$versions.androidx.navigation"
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.androidx.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$versions.androidx.navigation"
+
+    // ========== Androidx - various
+    implementation "androidx.appcompat:appcompat:$versions.androidx.appCompat"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.androidx.constraintLayout"
+    implementation "com.google.android.material:material:$versions.material_components"
 
     // ========== Dagger
     implementation "com.google.dagger:dagger:$versions.dagger"
@@ -74,8 +119,45 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:$versions.timber"
 
-    // ========== Tests
+    // Testing
     testImplementation "junit:junit:$versions.junit"
-    androidTestImplementation "androidx.test:runner:$versions.androidx.test_runner"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.androidx.test_espresso"
+    testImplementation "androidx.test:runner:$versions.androidx.test.runner"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testImplementation "org.mockito:mockito-core:$versions.mockito"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito_kotlin"
+
+    // Testing - Dagger
+    testImplementation "com.google.dagger:dagger:$versions.dagger"
+    kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
+    kaptTest "com.google.dagger:dagger-android-processor:$versions.dagger"
+
+    // Android Testing - Instrumentation
+    androidTestImplementation "androidx.test:runner:$versions.androidx.test.runner"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    androidTestImplementation "org.mockito:mockito-core:$versions.mockito"
+    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito_kotlin"
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation "androidx.test:core:$versions.androidx.test.core"
+    androidTestImplementation "androidx.test:runner:$versions.androidx.test.runner"
+    androidTestImplementation "androidx.test:rules:$versions.androidx.test.rules"
+
+    // Assertions
+    androidTestImplementation "androidx.test.ext:junit:$versions.androidx.test.junit"
+    androidTestImplementation "androidx.test.ext:truth:$versions.androidx.test.androidx_truth"
+    androidTestImplementation "com.google.truth:truth:$versions.androidx.test.google_truth"
+
+    // Espresso dependencies
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.androidx.test.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$versions.androidx.test.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$versions.androidx.test.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$versions.androidx.test.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-accessibility:$versions.androidx.test.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-web:$versions.androidx.test.espresso"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$versions.androidx.test.espresso"
+
+    // Android Testing - Dagger
+    androidTestImplementation "com.google.dagger:dagger:$versions.dagger"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$versions.dagger"
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:$versions.dagger"
 }
