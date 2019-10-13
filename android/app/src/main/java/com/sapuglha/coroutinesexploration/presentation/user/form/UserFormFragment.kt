@@ -42,17 +42,25 @@ class UserFormFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_form, container, false)
         binding.viewModel = viewModelUser
         binding.lifecycleOwner = this
 
         viewModelUser.formSaved.observe(this, Observer {
-            it.getContentIfNotHandled()?.let {
-                Toast.makeText(requireContext(), "User added", Toast.LENGTH_LONG).show()
-                Timber.e("*** Toast showed ***")
+            it.getContentIfNotHandled()?.let { success ->
+                if (success) {
+                    Toast.makeText(requireContext(), "User added", Toast.LENGTH_LONG).show()
+                    Timber.e("*** Toast showed ***")
 
-                findNavController().navigateUp()
+                    findNavController().navigateUp()
+                } else {
+                    Toast.makeText(requireContext(), "Failed to save", Toast.LENGTH_LONG).show()
+                }
             }
         })
 

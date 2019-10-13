@@ -22,7 +22,6 @@ class UserRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             return false
         }
-
         return true
     }
 }

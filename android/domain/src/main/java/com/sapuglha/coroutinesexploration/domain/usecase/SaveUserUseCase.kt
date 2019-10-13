@@ -7,5 +7,5 @@ import javax.inject.Inject
 class SaveUserUseCase @Inject constructor(
     val userRepository: UserRepository
 ) {
-    suspend fun execute(user: User) = userRepository.saveUser(user)
+    suspend fun execute(user: User): Boolean = userRepository.saveUser(user)
 }

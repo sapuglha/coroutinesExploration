@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.sapuglha.coroutinesexploration.domain.type.User
 import com.sapuglha.coroutinesexploration.domain.usecase.SaveUserUseCase
 import com.sapuglha.coroutinesexploration.presentation.Event
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -37,11 +35,8 @@ class UserFormViewModel @Inject constructor(
         if (isFormInvalid(inputData)) return
 
         viewModelScope.launch {
-            withContext(IO) {
-                saveUserUseCase.execute(inputData)
-            }
-
-            _formSaved.postValue(Event(true))
+            val success = saveUserUseCase.execute(inputData)
+            _formSaved.postValue(Event(success))
         }
     }
 
