@@ -14,8 +14,8 @@ import dagger.Subcomponent
         NetModule::class,
 
         // List modules for each activity/fragment/viewModel group
+        com.sapuglha.coroutinesexploration.presentation.user.form.di.Module::class,
         com.sapuglha.coroutinesexploration.presentation.user.list.di.Module::class,
-        com.sapuglha.coroutinesexploration.presentation.user.form.di.Module::class
     ]
 )
 interface SessionComponent {

@@ -11,6 +11,7 @@ import dagger.multibindings.IntoMap
 
 @Module
 internal abstract class Module {
+    @Scope
     @ContributesAndroidInjector
     abstract fun provideFormActivityInjector(): UserFormFragment
 
