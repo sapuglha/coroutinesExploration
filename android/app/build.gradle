@@ -119,6 +119,8 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:$versions.timber"
 
+    api "com.sagar:coroutinespermission:$versions.ezpermissions"
+
     // Testing
     testImplementation "junit:junit:$versions.junit"
     testImplementation "androidx.test:runner:$versions.androidx.test.runner"
