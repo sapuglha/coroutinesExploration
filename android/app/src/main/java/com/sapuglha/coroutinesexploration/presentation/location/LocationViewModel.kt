@@ -25,7 +25,6 @@ class LocationViewModel @Inject constructor(
         "Latitude: ${it.latitude}, Longitude: ${it.longitude}"
     }
 
-
     val currentLocationLabel: LiveData<String> = liveData {
         emitSource(observeCurrentLocationUseCase.execute().map {
             "Latitude: ${it.latitude}, Longitude: ${it.longitude}"

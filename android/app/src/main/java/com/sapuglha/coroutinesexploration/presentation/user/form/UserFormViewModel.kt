@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sapuglha.coroutinesexploration.domain.type.User
-import com.sapuglha.coroutinesexploration.domain.usecase.SaveUserUseCase
+import com.sapuglha.coroutinesexploration.domain.usecase.user.SaveUserUseCase
 import com.sapuglha.coroutinesexploration.presentation.Event
 import kotlinx.coroutines.launch
 import timber.log.Timber

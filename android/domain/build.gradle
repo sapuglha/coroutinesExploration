@@ -38,8 +38,6 @@ dependencies {
 
     // ========== Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.kotlinCoroutines"
 
     // LiveData
@@ -48,6 +46,4 @@ dependencies {
     // Dagger
     implementation "com.google.dagger:dagger:$versions.dagger"
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
-
-    implementation "junit:junit:$versions.junit"
 }

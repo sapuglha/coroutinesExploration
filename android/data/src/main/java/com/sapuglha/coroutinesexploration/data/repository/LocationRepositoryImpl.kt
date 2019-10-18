@@ -61,7 +61,7 @@ class LocationRepositoryImpl @Inject constructor(
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult?.lastLocation?.let {
                     currentLocation.postValue(it)
-                    Timber.d("New fresh location ${locationResult?.lastLocation}")
+                    Timber.d("New fresh location $it")
                 }
             }
         }
